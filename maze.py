@@ -23,6 +23,7 @@ class Maze:
     with blocked cells when created. Sparseness will be 0.2 by default representing a 20% blocked state on the
     grid.
     """
+
     def __init__(self, rows=10, columns=10, sparseness=0.2, start=MazeLocation(9, 9), goal=MazeLocation(9, 9)):
         # initialize instant variables
         self._rows = rows
@@ -33,7 +34,7 @@ class Maze:
         self._randomly_fill(rows, columns, sparseness)
 
     # populate the grid with blocked cells
-    def _randomly_fill(self, rows, columns, sparseness):
+    def _randomly_fill(self, rows: int, columns: int, sparseness: float):
         for row in range(rows):
             for column in range(columns):
                 if random.uniform(0, 1.0) < sparseness:
@@ -46,4 +47,24 @@ class Maze:
             output += "".join([c.value for c in row]) + "\n"
         return output
 
+    # test whether we have reached our goal MazeLocation
+    def goal_test(self, ml: MazeLocation):
+        return ml == self.goal
 
+    # find next possible location using successors. will look above, below, left, right
+    def successors(self, ml: MazeLocation):
+        locations = []
+        # check the row below
+        if ml.row + 1 < self._rows and self._grid[ml.row + 1][ml.col] != Cell.BLOCKED:
+            locations.append(MazeLocation(ml.row + 1, ml.col))
+        # check the row above
+        if ml.row - 1 >= 0 and self._grid[ml.row - 1][ml.col] != Cell.BLOCKED:
+            locations.append(MazeLocation(ml.row - 1, ml.col))
+        # check the column to the left
+        if ml.col - 1 >= 0 and self._grid[ml.row][ml.col - 1] != Cell.BLOCKED:
+            locations.append(MazeLocation(ml.row, ml.col - 1))
+        # check the column to the right
+        if ml.col + 1 < self._columns and self._grid[ml.row][ml.col + 1] != Cell.BLOCKED:
+            locations.append(MazeLocation(ml.row, ml.col + 1))
+
+        return locations
