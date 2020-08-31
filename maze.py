@@ -5,6 +5,9 @@ from typing import NamedTuple, List, Callable, Optional
 
 
 class Cell(str, Enum):
+    """
+    Cell: Will represent the current state of any cell in grid in string format.
+    """
     EMPTY = " "
     BLOCKED = "X"
     START = "S"
@@ -13,6 +16,9 @@ class Cell(str, Enum):
 
 
 class MazeLocation(NamedTuple):
+    """
+    Maze Location: Will keep track of any location on the maze (maze._grid[ml.row][ml.col])
+    """
     row: int
     col: int
 
