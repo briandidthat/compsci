@@ -9,6 +9,7 @@ T = TypeVar("T")
 C = TypeVar("C", bound="Comparable")
 
 
+# Comparable class to use for object comparison
 class Comparable(Protocol):
     def __eq__(self, other):
         return self == other
@@ -114,7 +115,7 @@ def dfs(initial, goal_test, successors) -> Optional[Node]:
 
 def node_to_path(node: Node[T]) -> List[T]:
     path: List[T] = [node.state]
-    # work backwords from end to front
+    # work back-words from end to front
     while node.parent is not None:
         node = node.parent
         path.append(node.state)

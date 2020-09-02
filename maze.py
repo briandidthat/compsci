@@ -30,7 +30,7 @@ class Maze:
     grid.
     """
 
-    def __init__(self, rows=10, columns=10, sparseness=0.2, start=MazeLocation(9, 9), goal=MazeLocation(9, 9)):
+    def __init__(self, rows=10, columns=10, sparseness=0.2, start=MazeLocation(0, 0), goal=MazeLocation(9, 9)):
         # initialize instant variables
         self._rows = rows
         self._columns = columns
@@ -38,6 +38,9 @@ class Maze:
         self.goal = goal
         self._grid = [[Cell.EMPTY for c in range(columns)] for r in range(rows)]
         self._randomly_fill(rows, columns, sparseness)
+        # fill the start and goal locations
+        self._grid[start.row][start.col] = Cell.START
+        self._grid[goal.row][goal.col] = Cell.GOAL
 
     # populate the grid with blocked cells
     def _randomly_fill(self, rows: int, columns: int, sparseness: float):
@@ -74,3 +77,17 @@ class Maze:
             locations.append(MazeLocation(ml.row, ml.col + 1))
 
         return locations
+
+    # mark up the grid with * where there is a path to the goal
+    def mark(self, path: List[MazeLocation]):
+        for maze_location in path:
+            self._grid[maze_location.row][maze_location.col] = Cell.PATH
+        self._grid[self.start.row][self.start.col] = Cell.START
+        self._grid[self.goal.row][self.goal.col] = Cell.GOAL
+
+    # clear the grid
+    def clear(self, path: List[MazeLocation]):
+        for maze_location in path:
+            self._grid[maze_location.row][maze_location.col] = Cell.EMPTY
+        self._grid[self.start.row][self.start.col] = Cell.START
+        self._grid[self.goal.row][self.goal.col] = Cell.GOAL
