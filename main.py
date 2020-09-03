@@ -3,7 +3,7 @@ from search.generic_search import binary_contains, linear_contains, node_to_path
 
 if __name__ == "__main__":
     maze = Maze()
-
+    #
     # print(linear_contains(['anthony', 'george', 'kevin', 'durk', 'brian'], "durk"))  # True
     # print(linear_contains(['anthony', 'george', 'kevin', 'durk', 'brian'], "mark"))  # False
     # print(binary_contains(["a", "b", "c", "d", "e", "f"], "l"))  # False
@@ -14,6 +14,10 @@ if __name__ == "__main__":
         print("There is no solution to this maze.")
     else:
         path = node_to_path(solution)
+        print("UNSOLVED: ")
+        print(maze)
+        print("==========================")
+        print("SOLVED: ")
         maze.mark(path)
         print(maze)
         maze.clear(path)

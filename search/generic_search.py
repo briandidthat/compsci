@@ -1,6 +1,7 @@
 from __future__ import annotations
 from heapq import heappop, heappush
-from typing import TypeVar, Protocol, Iterable, Sequence, Generic, List, Set, Dict, Optional, Callable
+from collections import deque
+from typing import TypeVar, Protocol, Iterable, Sequence, Generic, List, Set, Dict, Optional, Callable, Deque
 
 # Define TypeVar for generic arguments
 T = TypeVar("T")
@@ -58,6 +59,26 @@ class Stack(Generic[T]):
         return self._container.pop()  # LIFO by default
 
     def __repr__(self) -> str:
+        return repr(self._container)
+
+
+# Generic Queue class for breadth first searches
+class Queue(Generic[T]):
+    def __init__(self):
+        self._container: Deque[T] = deque()
+
+    @property
+    def empty(self) -> bool:
+        return not self._container
+
+    def push(self, item: T) -> None:
+        self._container.append(item)
+
+    # The advantage of using a deque: O(1) pops. Lists can efficiently pop from the right, but not from the left.
+    def pop(self) -> T:
+        return self._container.popleft()
+
+    def __repr__(self):
         return repr(self._container)
 
 
@@ -121,3 +142,4 @@ def node_to_path(node: Node[T]) -> List[T]:
         path.append(node.state)
     path.reverse()  # Reverse the list
     return path
+

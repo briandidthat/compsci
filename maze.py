@@ -36,6 +36,7 @@ class Maze:
         self._columns = columns
         self.start = start
         self.goal = goal
+        # Create 2d Matrix to represent the grid
         self._grid = [[Cell.EMPTY for c in range(columns)] for r in range(rows)]
         self._randomly_fill(rows, columns, sparseness)
         # fill the start and goal locations
