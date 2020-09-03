@@ -106,7 +106,18 @@ def binary_contains(sequence: Sequence[C], key: C) -> bool:
     return False
 
 
-def dfs(initial, goal_test, successors) -> Optional[Node]:
+def node_to_path(node: Node[T]) -> List[T]:
+    path: List[T] = [node.state]
+    # work back-words from end to front
+    while node.parent is not None:
+        node = node.parent
+        path.append(node.state)
+    path.reverse()  # Reverse the list
+    return path
+
+
+# Depth First Search using Queue class we created.
+def dfs(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]]) -> Optional[Node]:
     """
     :param initial: initial node we will be starting from.
     :param goal_test: function that will check if we have found a path to the goal.
@@ -114,8 +125,8 @@ def dfs(initial, goal_test, successors) -> Optional[Node]:
     :return: Node if there is a path, otherwise None.
     """
     frontier: Stack[Node[T]] = Stack()
-    frontier.push(Node(initial, None))
-    visited: Set[T] = {initial}  # add the initial node into the stack since we'll start there
+    frontier.push(Node(initial, None))  # add the first node with no parents since it is the starting place
+    visited: Set[T] = {initial}  # add the initial node into the visited set since we'll start there
 
     # While there is more to explore, keep exploring
     while not frontier.empty:
@@ -134,12 +145,33 @@ def dfs(initial, goal_test, successors) -> Optional[Node]:
     return None
 
 
-def node_to_path(node: Node[T]) -> List[T]:
-    path: List[T] = [node.state]
-    # work back-words from end to front
-    while node.parent is not None:
-        node = node.parent
-        path.append(node.state)
-    path.reverse()  # Reverse the list
-    return path
+# Breadth first search using the Queue class we created
+def bfs(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]]) -> Optional[Node]:
+    """
+    :param initial: initial node we will be starting from.
+    :param goal_test: function that will check if we have found a path to the goal.
+    :param successors: function that will return a list of the current nodes children.
+    :return: Node if there is a path, otherwise None.
+    """
+    frontier: Queue[T] = Queue()
+    frontier.push(Node(initial, None))  # add the first node with no parents since it is the starting place
+    visited: Set[T] = {initial}  # add the initial node into the visited set since we'll start there
+
+    # While there is more to explore, keep exploring
+    while not frontier.empty:
+        current_node: Node[T] = frontier.pop()
+        current_state: T = current_node.state
+        # if we've found the goal, we're done
+        if goal_test(current_state):
+            return current_node
+        # check where to go next based on what we haven't explored
+        for child in successors(current_state):
+            if child in visited:  # Check if the current cell has been visited
+                continue  # skip children since we've already explored them
+            visited.add(child)
+            frontier.push(Node(child, current_node))
+
+    return None
+
+
 
