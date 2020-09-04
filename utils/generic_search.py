@@ -101,7 +101,7 @@ class PriorityQueue(Generic[T]):
         return repr(self._container)
 
 
-# Traditional linear search (o(n))
+# Traditional linear utils (o(n))
 def linear_contains(iterable: Iterable[T], key: T) -> bool:
     for item in iterable:
         if item == key:
@@ -109,7 +109,7 @@ def linear_contains(iterable: Iterable[T], key: T) -> bool:
     return False
 
 
-# Traditional iterative binary search  (O(log n))
+# Traditional iterative binary utils  (O(log n))
 def binary_contains(sequence: Sequence[C], key: C) -> bool:
     low: int = 0
     high: int = len(sequence) - 1
@@ -164,7 +164,7 @@ def dfs(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], Li
     return None
 
 
-# Breadth first search using the Queue class
+# Breadth first utils using the Queue class
 def bfs(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]]) -> Optional[Node]:
     """
     :param initial: initial node we will be starting from.
@@ -193,7 +193,7 @@ def bfs(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], Li
     return None
 
 
-# A*Star search using PriorityQueue class
+# A*Star utils using PriorityQueue class
 def astar(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]],
           heuristic: Callable[[T], float]) -> Optional[Node[T]]:
     """

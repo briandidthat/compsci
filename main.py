@@ -1,5 +1,5 @@
-from maze import Maze, euclidean_distance, manhattan_distance
-from search.generic_search import node_to_path, dfs, bfs, astar
+from problems.maze import Maze, manhattan_distance
+from utils.generic_search import node_to_path, dfs, bfs, astar
 
 if __name__ == "__main__":
     maze = Maze()
