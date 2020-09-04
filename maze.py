@@ -92,3 +92,23 @@ class Maze:
             self._grid[maze_location.row][maze_location.col] = Cell.EMPTY
         self._grid[self.start.row][self.start.col] = Cell.START
         self._grid[self.goal.row][self.goal.col] = Cell.GOAL
+
+
+# calculate the euclidean distance (as the crow flies so will be a straight line from start -> goal)
+def euclidean_distance(goal: MazeLocation) -> Callable[[MazeLocation], float]:
+    def distance(ml: MazeLocation) -> float:
+        xdist: int = abs(ml.col - goal.col)  # difference in x = difference in cols
+        ydist: int = abs(ml.row - goal.row)  # difference in y = difference in rows
+        return sqrt((xdist**2) + (ydist**2))  # distance = √((difference in x squared) + (difference in y squared)
+
+    return distance
+
+
+# calculate the manhattan distance (walking through a grid horizontally & vertically from start -> goal)
+def manhattan_distance(goal: MazeLocation) -> Callable[[MazeLocation], float]:
+    def distance(ml: MazeLocation) -> float:
+        xdist: int = abs(ml.col - goal.col)
+        ydist: int = abs(ml.row - goal.row)
+        return (xdist + ydist)
+
+    return distance

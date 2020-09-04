@@ -12,7 +12,7 @@ C = TypeVar("C", bound="Comparable")
 
 # Comparable class to use for object comparison
 class Comparable(Protocol):
-    def __eq__(self, other):
+    def __eq__(self, other) -> bool:
         return self == other
 
     def __lt__(self: C, other: C) -> bool:
@@ -30,7 +30,7 @@ class Comparable(Protocol):
 
 # Generic Node class to represent any current state in the stack
 class Node(Generic[T]):
-    def __init__(self, state: T, parent: Optional, cost: float = 0.0, heuristic: float = 0.0):
+    def __init__(self, state: T, parent: Optional[Node], cost: float = 0.0, heuristic: float = 0.0):
         self.state = state
         self.parent = parent
         self.cost = cost
@@ -82,6 +82,25 @@ class Queue(Generic[T]):
         return repr(self._container)
 
 
+# Generic Priority Queue for A*Star searches
+class PriorityQueue(Generic[T]):
+    def __init__(self) -> None:
+        self._container: List[T] = []
+
+    @property
+    def empty(self) -> bool:
+        return not self._container
+
+    def push(self, item: T) -> None:
+        heappush(self._container, item)  # in by priority ( priority = lowest f(n). f(n) = g(n) + h(n) )
+
+    def pop(self) -> T:
+        return heappop(self._container)  # out by priority
+
+    def __repr__(self) -> str:
+        return repr(self._container)
+
+
 # Traditional linear search (o(n))
 def linear_contains(iterable: Iterable[T], key: T) -> bool:
     for item in iterable:
@@ -116,7 +135,7 @@ def node_to_path(node: Node[T]) -> List[T]:
     return path
 
 
-# Depth First Search using Queue class we created.
+# Depth First Search using Stack class
 def dfs(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]]) -> Optional[Node]:
     """
     :param initial: initial node we will be starting from.
@@ -145,7 +164,7 @@ def dfs(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], Li
     return None
 
 
-# Breadth first search using the Queue class we created
+# Breadth first search using the Queue class
 def bfs(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]]) -> Optional[Node]:
     """
     :param initial: initial node we will be starting from.
@@ -174,4 +193,34 @@ def bfs(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], Li
     return None
 
 
+# A*Star search using PriorityQueue class
+def astar(initial: T, goal_test: Callable[[T], bool], successors: Callable[[T], List[T]],
+          heuristic: Callable[[T], float]) -> Optional[Node[T]]:
+    """
+    :param heuristic:
+    :param initial: initial node we will be starting from.
+    :param goal_test: function that will check if we have found a path to the goal.
+    :param successors: function that will return a list of the current nodes children.
+    :return: Node if there is a path, otherwise None.
+    """
 
+    frontier: PriorityQueue[T] = PriorityQueue()
+    frontier.push(Node(initial, None, heuristic=heuristic(initial)))  # add the first node with no parents
+    visited: Dict[T, float] = {initial: 0.0}  # add initial to the visited set with no cost
+
+    # While there are more nodes to explore, continue exploring
+    while not frontier.empty:
+        current_node: Node[T] = frontier.pop()
+        current_state: T = current_node.state
+        # if we've found the goal, we're done
+        if goal_test(current_state):
+            return current_node
+        # check where we can go next and haven't visited yet
+        for child in successors(current_state):
+            new_cost: float = current_node.cost + 1  # 1 assumes a grid so one move in any direction
+            if child not in visited or visited[child] > new_cost:
+                # we have now found a shorter path since it has a lesser cost. update dictionary
+                visited[child] = new_cost
+                frontier.push(Node(child, current_node, new_cost, heuristic(child)))
+
+    return None
