@@ -1,4 +1,4 @@
-from problems.maze import Maze, manhattan_distance
+from challenges.maze import Maze, manhattan_distance
 from utils.generic_search import node_to_path, dfs, bfs, astar
 
 if __name__ == "__main__":
