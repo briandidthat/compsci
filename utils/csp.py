@@ -70,4 +70,4 @@ class CSP(Generic[V, D]):
                 result: Optional[Dict[V, D]] = self.backtracking_search(local_assignment)
                 if result is not None:  # if we didn't find the result, we will end up backtracking
                     return result
-            return None
+        return None
