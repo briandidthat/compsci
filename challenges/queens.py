@@ -20,7 +20,7 @@ class QueensConstraint(Constraint[int, int]):
 
 
 if __name__ == "__main__":
-    columns: List[int] = [1, 2, 3, 4, 5, 6, 7, 8]
+    columns: List[int] = [1, 2, 3, 4, 5, 6, 7, 8]  # 8 x 8 chess board
     rows: Dict[int, List[int]] = {}
 
     for column in columns:

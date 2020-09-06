@@ -64,10 +64,10 @@ class Maze:
     # find next possible location using successors. will look above, below, left, right
     def successors(self, ml: MazeLocation):
         locations = []
-        # check the row below
+        # check the row above
         if ml.row + 1 < self._rows and self._grid[ml.row + 1][ml.col] != Cell.BLOCKED:
             locations.append(MazeLocation(ml.row + 1, ml.col))
-        # check the row above
+        # check the row below
         if ml.row - 1 >= 0 and self._grid[ml.row - 1][ml.col] != Cell.BLOCKED:
             locations.append(MazeLocation(ml.row - 1, ml.col))
         # check the column to the left
@@ -107,8 +107,8 @@ def euclidean_distance(goal: MazeLocation) -> Callable[[MazeLocation], float]:
 # calculate the manhattan distance (walking through a grid horizontally & vertically from start -> goal)
 def manhattan_distance(goal: MazeLocation) -> Callable[[MazeLocation], float]:
     def distance(ml: MazeLocation) -> float:
-        xdist: int = abs(ml.col - goal.col)
-        ydist: int = abs(ml.row - goal.row)
-        return (xdist + ydist)
+        xdist: int = abs(ml.col - goal.col)  # difference in x = difference in cols
+        ydist: int = abs(ml.row - goal.row)  # difference in y = difference in rows
+        return (xdist + ydist)  # manhattan distance = difference in x + difference in y
 
     return distance
