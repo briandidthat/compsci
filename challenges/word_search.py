@@ -15,7 +15,7 @@ class GridLocation(NamedTuple):
 
 def generate_grid(rows: int, cols: int) -> Grid:
     # generate grid with random letters
-    return [[choice(ascii_uppercase) for _ in range(cols)] for r in range(rows)]
+    return [[choice(ascii_uppercase) for _ in range(cols)] for _ in range(rows)]
 
 
 def display_grid(grid: Grid) -> None:
@@ -55,5 +55,35 @@ def generate_domain(word: str, grid: Grid) -> List[List[GridLocation]]:
 
 
 class WordSearchConstraint(Constraint[str, List[GridLocation]]):
+    def __init__(self, words: List[str]) -> None:
+        super().__init__(words)
+        self.words: List[str] = words
+
     def satisfied(self, assignment: Dict[V, D]) -> bool:
-        pass
+        # if there are any duplicates across the grid, then there is an overlap
+        all_locations = [locs for values in assignment.values() for locs in values]
+        return len(set(all_locations)) == len(all_locations)
+
+
+if __name__ == "__main__":
+    grid: Grid = generate_grid(9, 9)
+    words: List[str] = ["MATTHEW", "JOE", "MARY", "SARAH", "SALLY"]
+    locations: Dict[str, List[GridLocation]] = {}
+
+    for word in words:
+        locations[word] = generate_domain(word, grid)
+
+    csp: CSP[str, List[GridLocation]] = CSP(words, locations)
+    csp.add_constraint(WordSearchConstraint(words))
+    solution = csp.backtracking_search()
+
+    if solution is None:
+        print("No solution found!")
+    else:
+        for word, grid_locations in solution.items():
+            if choice([True, False]):
+                grid_locations.reverse()
+            for index, letter in enumerate(word):
+                (row, col) = (grid_locations[index].row, grid_locations[index].col)
+                grid[row][col] = letter
+        display_grid(grid)
