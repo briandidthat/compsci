@@ -3,6 +3,15 @@ from random import choice
 from string import ascii_uppercase
 from utils.csp import CSP, Constraint, V, D
 
+"""
+WORD SEARCH PROBLEM
+A word search is a grid of letters with hidden words placed across rows, columns and diagonals. A player of a word
+search puzzle attempts to find the hidden words by carefully scanning through the grid. Finding places to put the words 
+is a kind of constraint satisfaction problem. The variables are the words and the domains are the possible locations of 
+those words.
+"""
+
+
 # Define Grid type alias to represent a 2d matrix
 Grid = List[List[str]]
 

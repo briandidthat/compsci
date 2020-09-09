@@ -2,6 +2,11 @@ from __future__ import annotations
 from typing import List, Optional
 from utils.generic_search import bfs, Node, node_to_path
 
+"""
+MISSIONARIES AND CANNIBALS
+"""
+
+
 MAX_NUM: int = 3  # maximum number of cannibals or missionaries at any time
 
 

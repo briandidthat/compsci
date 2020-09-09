@@ -2,7 +2,7 @@ from utils.csp import Constraint, CSP, V, D
 from typing import Dict, List, Optional
 
 """
-AUSTRALIAN MAP COLORING PROBLEM
+AUSTRALIAN MAP COLORING 
 Problem: Imagine you have a map of australia that you want to color by state/territory (regions). No two adjacent
 regions can share a color. Can you color the regions with just three colors? Hint: YES YOU CAN
 """
