@@ -2,6 +2,7 @@ import random
 from enum import Enum
 from math import sqrt
 from typing import NamedTuple, List, Callable, Optional
+from utils.generic_search import node_to_path, dfs, bfs, astar
 
 
 class Cell(str, Enum):
@@ -99,7 +100,7 @@ def euclidean_distance(goal: MazeLocation) -> Callable[[MazeLocation], float]:
     def distance(ml: MazeLocation) -> float:
         xdist: int = abs(ml.col - goal.col)  # difference in x = difference in cols
         ydist: int = abs(ml.row - goal.row)  # difference in y = difference in rows
-        return sqrt((xdist**2) + (ydist**2))  # distance = √((difference in x squared) + (difference in y squared)
+        return sqrt((xdist ** 2) + (ydist ** 2))  # distance = √((difference in x squared) + (difference in y squared)
 
     return distance
 
@@ -112,3 +113,31 @@ def manhattan_distance(goal: MazeLocation) -> Callable[[MazeLocation], float]:
         return (xdist + ydist)  # manhattan distance = difference in x + difference in y
 
     return distance
+
+
+if __name__ == "__main__":
+    maze = Maze()
+
+    dfs_solution = dfs(maze.start, maze.goal_test, maze.successors)
+    bfs_solution = bfs(maze.start, maze.goal_test, maze.successors)
+
+    distance = manhattan_distance(maze.goal)  # manhattan distance for astar solution
+    astar_solution = astar(maze.start, maze.goal_test, maze.successors, distance)
+
+    if astar_solution is None:
+        print("There is no solution to this maze.")
+    else:
+        # print("Depth First Solution:")
+        # path = node_to_path(dfs_solution)
+        # maze.mark(path)
+        # print(maze)
+        # maze.clear(path)
+        # print("================================")
+        # print("Breadth First Solution:")
+        # path = node_to_path(bfs_solution)
+        # maze.mark(path)
+        # print(maze)
+        # maze.clear(path)
+        path = node_to_path(astar_solution)
+        maze.mark(path)
+        print(maze)
