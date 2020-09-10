@@ -33,3 +33,15 @@ class Graph(Generic[V]):
         u: int = self._vertices.index(first)
         v: int = self._vertices.index(second)
         self.add_edge_by_indices(u, v)
+
+    # find a vertex at a specific index
+    def vertex_at(self, index: int) -> V:
+        return self._vertices[index]
+
+    # find the index of a vertex in the graph
+    def index_of(self, vertex: V) -> int:
+        return self._vertices.index(vertex)
+
+    # Look up a Vertices index and find its neighbors (convenience method)
+    def neighbors_for_index(self, index: int) -> List[V]:
+        return list(map(self.vertex_at, [e.v for e in self._edges[index]]))
