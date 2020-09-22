@@ -1,2 +1,2 @@
-# Maze-Solving
-Maze solving and searching 
+# Compsci
+Random computer science challenges. Maze solving, Map Coloring, 8 queens, Minimum Spanning Tree, etc...
