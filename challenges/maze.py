@@ -1,7 +1,7 @@
 import random
 from enum import Enum
 from math import sqrt
-from typing import NamedTuple, List, Callable, Optional
+from typing import NamedTuple, List, Callable
 from utils.generic_search import node_to_path, dfs, bfs, astar
 
 
