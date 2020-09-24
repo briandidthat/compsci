@@ -84,5 +84,8 @@ if __name__ == "__main__":
     if result is None:
         print("No solution!")
     else:
+        print("GRAPH:")
         print(city_graph)
-        #print_weighted_graph(city_graph, result)
+        print("=================================================")
+        print("MINIMUM SPANNING TREE")
+        print_weighted_graph(city_graph, result)
