@@ -47,3 +47,17 @@ class WeightedGraph(Generic[V], Graph[V]):
         for i in range(self.vertex_count):
             desc += f"{self.vertex_at(i)} -> {self.neighbors_for_index_with_weights(i)}\n"
         return desc
+
+
+WeightedPath = List[WeightedEdge]  # define type alias for the path
+
+
+def total_weight(wp: WeightedPath):
+    return sum([e.weight for e in wp])
+
+
+def print_weighted_path(wg: WeightedGraph, wp: WeightedPath) -> None:
+    for edge in wp:
+        print(f"{wg.vertex_at(edge.u)}  {edge.weight}> {wg.vertex_at(edge.v)}")
+
+    print(f"Total Weight: {total_weight(wp)}")

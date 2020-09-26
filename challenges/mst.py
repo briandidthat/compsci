@@ -1,13 +1,6 @@
 from typing import TypeVar, List, Optional, Set
 from utils.generic_search import PriorityQueue
-from utils.weighted_graph import WeightedEdge, WeightedGraph
-
-V = TypeVar("V")  # define TypeVar V for vertices
-WeightedPath = List[WeightedEdge]  # define type alias for the path
-
-
-def total_weight(wp: WeightedPath):
-    return sum([e.weight for e in wp])
+from utils.weighted_graph import WeightedGraph, WeightedPath, V, print_weighted_path
 
 
 def mst(wg: WeightedGraph[V], start: int = 0) -> Optional[WeightedPath]:
@@ -37,13 +30,6 @@ def mst(wg: WeightedGraph[V], start: int = 0) -> Optional[WeightedPath]:
         visit(edge.v)
 
     return result
-
-
-def print_weighted_graph(wg: WeightedGraph, wp: WeightedPath) -> None:
-    for edge in wp:
-        print(f"{wg.vertex_at(edge.u)}  {edge.weight}> {wg.vertex_at(edge.v)}")
-
-    print(f"Total Weight: {total_weight(wp)}")
 
 
 if __name__ == "__main__":
@@ -88,4 +74,4 @@ if __name__ == "__main__":
         print(city_graph)
         print("=================================================")
         print("MINIMUM SPANNING TREE")
-        print_weighted_graph(city_graph, result)
+        print_weighted_path(city_graph, result)
