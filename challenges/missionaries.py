@@ -20,9 +20,9 @@ class MCState:
 
     @property
     def is_legal(self) -> bool:
-        if self.wm < self.wc and self.wm > 0:
+        if self.wc > self.wm > 0:
             return False
-        if self.em < self.ec and self.em > 0:
+        if self.ec > self.em > 0:
             return False
         return True
 

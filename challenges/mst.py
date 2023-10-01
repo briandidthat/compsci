@@ -4,7 +4,7 @@ from utils.weighted_graph import WeightedGraph, WeightedPath, V, print_weighted_
 
 
 def mst(wg: WeightedGraph[V], start: int = 0) -> Optional[WeightedPath]:
-    if start > (wg.vertex_count) or start < 0:
+    if start > wg.vertex_count or start < 0:
         return None
 
     result: WeightedPath = []

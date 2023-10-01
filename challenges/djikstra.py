@@ -111,6 +111,6 @@ if __name__ == "__main__":
         print(f"{key} : {val}")
     print("")
 
-    print("Shortest path from Los Angeles to Boston:")
-    path: WeightedPath = dict_to_path(city_graph.index_of("Los Angeles"), city_graph.index_of("Boston"), paths)
+    print("Shortest path from Los Angeles to New York:")
+    path: WeightedPath = dict_to_path(city_graph.index_of("Los Angeles"), city_graph.index_of("New York"), paths)
     print_weighted_path(city_graph, path)

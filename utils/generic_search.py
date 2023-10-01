@@ -9,6 +9,8 @@ T = TypeVar("T")
 # Define TypeVar C for arguments bound to the comparable class
 C = TypeVar("C", bound="Comparable")
 
+name = '"brian"'
+
 
 # Comparable class to use for object comparison
 class Comparable(Protocol):

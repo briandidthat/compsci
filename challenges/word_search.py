@@ -1,4 +1,4 @@
-from typing import NamedTuple, List, Dict, Optional
+from typing import NamedTuple, List, Dict
 from random import choice
 from string import ascii_uppercase
 from utils.csp import CSP, Constraint, V, D
